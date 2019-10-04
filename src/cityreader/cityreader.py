@@ -1,6 +1,11 @@
 # Create a class to hold a city location. Call the class "City". It should have
 # fields for name, lat and lon (representing latitude and longitude).
 
+class City:
+  def __init__(self, name, lat, lon):
+    self.name = name
+    self.lat = lat
+    self.lon = lon
 
 # We have a collection of US cities with population over 750,000 stored in the
 # file "cities.csv". (CSV stands for "comma-separated values".)
@@ -14,14 +19,23 @@
 #
 # Note that the first line of the CSV is header that describes the fields--this
 # should not be loaded into a City object.
+
+import csv
+
 cities = []
 
 def cityreader(cities=[]):
   # TODO Implement the functionality to read from the 'cities.csv' file
   # For each city record, create a new City instance and add it to the 
   # `cities` list
+  with open('cities.csv', newline='') as csvfile:
+    next(csvfile)
+    citiesreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
+    for row in citiesreader:
+      right_format = ' '.join(row).split(',')[:8]
+      cities.append(City(right_format[0], float(right_format[3]), float(right_format[4])))
     
-    return cities
+  return cities
 
 cityreader(cities)
 
@@ -67,5 +81,30 @@ def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
   # TODO Ensure that the lat and lon valuse are all floats
   # Go through each city and check to see if it falls within 
   # the specified coordinates.
+  if (type(lat1) != float and type(lat2) != float and type(lon1) != float and type(lon2) != float):
+    print('Input values are invalid. Please input numbers.')
+
+  # check if city falls within coordinates
+  # lat1 + -lat2 if lat1 > lat2 lat2 <= x <= lat1
+  # lon1 + -lon2 if lat2 > kat1 lat1 <= x <= lat2
+  # check which is bigger
+  # assign bigger to bigger, smaller to smaller and compare
+
+  if lat1 > lat2:
+    bigLat = lat1
+    smallLat = lat2
+  else:
+    bigLat = lat2
+    smallLat = lat1
+  
+  if lon1 > lon2:
+    bigLon = lon1
+    smallLon = lon2
+  else:
+    bigLon = lon2
+    smallLon = lon1
+
+  within = [city for city in cities if smallLat <= city.lat <= bigLat and smallLon <= city.lon <= bigLon]
+
 
   return within
