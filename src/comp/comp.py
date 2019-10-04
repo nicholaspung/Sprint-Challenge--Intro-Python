@@ -56,7 +56,6 @@ print(e)
 print("Names and ages between 27 and 32:")
 f = [(human.name, human.age) for human in humans if human.age >= 27 and human.age <= 32]
 print(f)
-# ------NEEDS WORKS ######
 
 # Write a list comprehension that creates a list of new Humans like the old
 # list, except with all the names uppercase and the ages with 5 added to them.
@@ -64,7 +63,6 @@ print(f)
 print("All names uppercase:")
 g = [Human(human.name.upper(), human.age + 5) for human in humans]
 print(g)
-# ------NEEDS WORKS ######
 
 # Write a list comprehension that contains the square root of all the ages.
 print("Square root of ages:")
